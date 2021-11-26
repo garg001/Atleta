@@ -6,8 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -26,7 +30,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class SignInActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private static final String TAG = "GoogleActivity";
+    private static final String TAG = "SignInActivity";
+    private Button loginBT;
+    private EditText emailET,passET;
 
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -53,6 +59,46 @@ public class SignInActivity extends AppCompatActivity {
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
         signInButton.setOnClickListener(v -> signIn());
+
+        loginBT=findViewById(R.id.loginButton);
+        emailET=findViewById(R.id.editTextEmailAddress);
+        passET=findViewById(R.id.editTextPassword);
+
+        loginBT.setOnClickListener(view->{
+            loginUserEP();
+        });
+    }
+
+    private void loginUserEP() {
+        String email = emailET.getText().toString();
+        String password= passET.getText().toString();
+
+        if(TextUtils.isEmpty(email)){
+            emailET.setError("Email cannot be empty");
+            emailET.requestFocus();
+        }else if(TextUtils.isEmpty(password)){
+            passET.setError("Password cannot be empty");
+            passET.requestFocus();
+        }else{
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                //updateUI(user);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                Toast.makeText(SignInActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                                //updateUI(null);
+                            }
+                        }
+                    });
+        }
     }
 
     @Override
@@ -63,7 +109,7 @@ public class SignInActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if(currentUser!=null) {
-            // updateUI(currentUser);
+            // SwipeActivity(currentUser);
         }
     }
 
@@ -94,6 +140,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
     private void firebaseAuthWithGoogle(String idToken) {
+        //ProgressbarStart
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -103,12 +150,15 @@ public class SignInActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
+                            //Write user to database
+                            //SwipeActivity(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             //updateUI(null);
                         }
+
+                        //EndProgressBar
                     }
                 });
     }
