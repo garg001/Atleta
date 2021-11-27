@@ -58,7 +58,7 @@ public class SwipeActivity extends AppCompatActivity {
                 }
 
                 //paginating
-                if(manager.getTopPosition() ==  adapter.getItemCount() -5 ){
+                if(manager.getTopPosition() ==  adapter.getItemCount() -5  ){
                     paginate();
                 }
 

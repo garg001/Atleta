@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Atleta"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".UserProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".SwipeActivity"
             android:exported="false" />
         <activity

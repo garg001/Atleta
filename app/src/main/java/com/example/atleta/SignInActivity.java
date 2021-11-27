@@ -26,6 +26,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -33,6 +35,8 @@ public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "SignInActivity";
     private Button loginBT;
     private EditText emailET,passET;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference mDatabase;
 
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -54,6 +58,7 @@ public class SignInActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = database.getReference();
 
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
@@ -88,11 +93,14 @@ public class SignInActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                //updateUI(user);
+                                //SwipeActivity(user);
+                                Intent intent1 =new Intent(SignInActivity.this,SwipeActivity.class);
+                                intent1.putExtra("user",user);
+                                startActivity(intent1);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                Toast.makeText(SignInActivity.this, "Authentication failed.",
+                                Toast.makeText(SignInActivity.this, "Authentication failed. "+task.getException(),
                                         Toast.LENGTH_SHORT).show();
                                 //updateUI(null);
                             }
@@ -151,15 +159,30 @@ public class SignInActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             //Write user to database
+                            try{
+                                writeNewUser(user.getUid(), user.getDisplayName(), user.getEmail());
+                            }catch (Exception ex){
+                                Log.d("writedatafailed",ex.toString());
+                            }
                             //SwipeActivity(user);
+                            Intent intent =new Intent(SignInActivity.this,SwipeActivity.class);
+                            intent.putExtra("user",user);
+                            startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(SignInActivity.this,"Sign In Failure. "+task.getException(),Toast.LENGTH_SHORT).show();
                             //updateUI(null);
                         }
 
                         //EndProgressBar
                     }
                 });
+    }
+
+    public void writeNewUser(String userId, String name, String email) {
+        User user = new User(name, email);
+
+        mDatabase.child("users").child(userId).setValue(user);
     }
 }
