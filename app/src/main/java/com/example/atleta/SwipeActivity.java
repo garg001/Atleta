@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DiffUtil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -26,18 +28,28 @@ public class SwipeActivity extends AppCompatActivity {
     private static final String TAG ="SwipeActivity" ;
     private CardStackLayoutManager manager;
     private CardStackAdapter adapter;
+    private Bundle extras;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            user = (FirebaseUser) extras.get("user");
+        }
 
         CardStackView cardStackView = findViewById(R.id.card_stack_view);
         manager=new CardStackLayoutManager(this, new CardStackListener() {
             @Override
             public void onCardDragging(Direction direction, float ratio) {
                 Log.d(TAG,"onCardDragging: d="+ direction.name() + " ratio=" +ratio);
-
+                if(direction.name()=="Bottom" && ratio>=0.6) {
+                    Intent intent = new Intent(SwipeActivity.this, UserProfileActivity.class);
+                    intent.putExtra("user",user);
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -95,7 +107,7 @@ public class SwipeActivity extends AppCompatActivity {
         manager.setScaleInterval(0.95f);
         manager.setSwipeThreshold(0.3f);
         manager.setMaxDegree(20.0f);
-        manager.setDirections(Direction.FREEDOM);
+        manager.setDirections(Direction.HORIZONTAL);
         manager.setCanScrollHorizontal(true);
         manager.setSwipeableMethod(SwipeableMethod.Manual);
         manager.setOverlayInterpolator(new LinearInterpolator());
