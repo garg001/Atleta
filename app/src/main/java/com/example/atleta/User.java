@@ -1,8 +1,10 @@
 package com.example.atleta;
 
 public class User {
-    private String userName,userEmail,age,favorite,experience,frequency,location;
+    private String userName,userEmail,age,favorite,experience,frequency,location,DpURL;
 
+    public User() {
+    }
 
     public User(String userName, String userEmail) {
         this.userName = userName;
@@ -12,6 +14,15 @@ public class User {
         experience="";
         frequency="";
         location="";
+        DpURL="";
+    }
+
+    public String getDpURL() {
+        return DpURL;
+    }
+
+    public void setDpURL(String dpURL) {
+        DpURL = dpURL;
     }
 
     public String getUserName() {

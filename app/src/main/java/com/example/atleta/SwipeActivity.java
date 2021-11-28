@@ -35,10 +35,6 @@ public class SwipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
-        extras = getIntent().getExtras();
-        if (extras != null) {
-            user = (FirebaseUser) extras.get("user");
-        }
 
         CardStackView cardStackView = findViewById(R.id.card_stack_view);
         manager=new CardStackLayoutManager(this, new CardStackListener() {
