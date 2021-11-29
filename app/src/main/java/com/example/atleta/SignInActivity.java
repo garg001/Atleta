@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -41,6 +42,7 @@ public class SignInActivity extends AppCompatActivity {
     private EditText emailET,passET;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabase;
+    private ProgressBar simpleProgressBar;
 
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -50,6 +52,8 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        simpleProgressBar = findViewById(R.id.progressBar2);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -79,6 +83,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void loginUserEP() {
+        simpleProgressBar.setVisibility(View.VISIBLE);
         String email = emailET.getText().toString();
         String password= passET.getText().toString();
 
@@ -108,6 +113,8 @@ public class SignInActivity extends AppCompatActivity {
                                         Toast.LENGTH_SHORT).show();
                                 //updateUI(null);
                             }
+
+                            simpleProgressBar.setVisibility(View.INVISIBLE);
                         }
                     });
         }
@@ -153,6 +160,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(String idToken) {
         //ProgressbarStart
+        simpleProgressBar.setVisibility(View.VISIBLE);
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -194,6 +202,7 @@ public class SignInActivity extends AppCompatActivity {
                         }
 
                         //EndProgressBar
+                        simpleProgressBar.setVisibility(View.INVISIBLE);
                     }
                 });
     }

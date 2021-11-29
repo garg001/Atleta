@@ -22,11 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button login= findViewById(R.id.loginButton);
         Button singup= findViewById(R.id.signUpButton);
-        Button testButton=findViewById(R.id.testbutton);
-
-        testButton.setOnClickListener(view ->{
-            startActivity(new Intent(MainActivity.this,SwipeActivity.class));
-        });
 
         Intent intent = new Intent(MainActivity.this, SignInActivity.class);
         login.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,6 @@
 package com.example.atleta;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DiffUtil;
@@ -9,10 +10,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -30,12 +38,22 @@ public class SwipeActivity extends AppCompatActivity {
     private CardStackAdapter adapter;
     private Bundle extras;
     private FirebaseUser user;
+    private DatabaseReference mDatabase,userRef;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private boolean isLoading=false;
+    private String key=null;
+    private Query query;
+    private ProgressBar simpleProgressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
 
+        simpleProgressBar = findViewById(R.id.progressBar4);
+        mDatabase=  database.getReference();
+        userRef= mDatabase.child("users");
         CardStackView cardStackView = findViewById(R.id.card_stack_view);
         manager=new CardStackLayoutManager(this, new CardStackListener() {
             @Override
@@ -66,8 +84,11 @@ public class SwipeActivity extends AppCompatActivity {
                 }
 
                 //paginating
-                if(manager.getTopPosition() ==  adapter.getItemCount() -5  ){
-                    paginate();
+                if(adapter.getItemCount() < manager.getTopPosition() + 1){
+                    if(!isLoading){
+                        isLoading=true;
+                        addList();
+                    }
                 }
 
 
@@ -107,29 +128,45 @@ public class SwipeActivity extends AppCompatActivity {
         manager.setCanScrollHorizontal(true);
         manager.setSwipeableMethod(SwipeableMethod.Manual);
         manager.setOverlayInterpolator(new LinearInterpolator());
-        adapter = new CardStackAdapter(addList());
+        adapter = new CardStackAdapter(this);
+        addList();
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(adapter);
         cardStackView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    private void paginate() {
-        List<ItemModel> old=adapter.getItems();
-        List<ItemModel> nevv=new ArrayList<>(addList());
-        CardStackCallback callback=new CardStackCallback(old,nevv);
-        DiffUtil.DiffResult result=DiffUtil.calculateDiff(callback);
-        adapter.setItems(nevv);
-        result.dispatchUpdatesTo(adapter);
-    }
+    private void addList() {
+        simpleProgressBar.setVisibility(View.VISIBLE);
+        if(key==null){
+            query=userRef.orderByKey().limitToFirst(8);
+        }
+        else{
+            query=userRef.orderByKey().startAfter(key).limitToFirst(8);
+        }
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<ItemModel> items =new ArrayList<>();
+                for(DataSnapshot data: snapshot.getChildren()){
+                    User user2=data.getValue(User.class);
+                    ItemModel itemModel=new ItemModel(user2.getDpURL(),user2.getUserName(),user2.getAge(),user2.getLocation());
+                    items.add(itemModel);
+                    key=data.getKey();
+                }
+                adapter.setItems(items);
+                adapter.notifyDataSetChanged();
+                isLoading=false;
+                simpleProgressBar.setVisibility(View.INVISIBLE);
+            }
 
-    private List<ItemModel> addList() {
-        List<ItemModel> items =new ArrayList<>();
-        items.add(new ItemModel(R.drawable.sample1,"Ellen","24","Vancouver"));
-        items.add(new ItemModel(R.drawable.sample2,"Emily","21","New Westminster"));
-        items.add(new ItemModel(R.drawable.sample1,"Ellen","24","Vancouver"));
-        items.add(new ItemModel(R.drawable.sample2,"Emily","21","New Westminster"));
-        items.add(new ItemModel(R.drawable.sample1,"Ellen","24","Vancouver"));
-        items.add(new ItemModel(R.drawable.sample2,"Emily","21","New Westminster"));
-        return items;
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(SwipeActivity.this , "Error "+error, Toast.LENGTH_SHORT).show();
+                Log.d(TAG,"SwipeActivity error: "+error);
+                simpleProgressBar.setVisibility(View.INVISIBLE);
+            }
+
+        });
+
     }
 }

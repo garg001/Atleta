@@ -1,5 +1,6 @@
 package com.example.atleta;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.ViewHolder>{
 
     private List<ItemModel> items;
+    private Context context;
 
-    public CardStackAdapter(List<ItemModel> items) {
-        this.items = items;
+    public CardStackAdapter( Context context) {
+        this.context=context;
+        items=new ArrayList<>();
     }
 
     @NonNull
@@ -52,11 +57,7 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
         }
 
          void setData(ItemModel data) {
-             Picasso.get()
-                     .load(data.getImage())
-                     .fit()
-                     .centerCrop()
-                     .into(image);
+             Glide.with(context).load(data.getImgURL()).into(image);
              name.setText(data.getName());
              age.setText(data.getAge());
              city.setText(data.getLocation());

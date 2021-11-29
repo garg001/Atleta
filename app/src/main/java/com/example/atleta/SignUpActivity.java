@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,11 +28,14 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "SignUpActivity";
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabase;
+    private ProgressBar simpleProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        simpleProgressBar = findViewById(R.id.progressBar3);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = database.getReference();
@@ -45,6 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void createUser() {
+        simpleProgressBar.setVisibility(View.VISIBLE);
         String email = emailET.getText().toString();
         String password= passET.getText().toString();
         String userName=userNameET.getText().toString();
@@ -84,6 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         Toast.LENGTH_SHORT).show();
                                // updateUI(null);
                             }
+                            simpleProgressBar.setVisibility(View.INVISIBLE);
                         }
                     });
         }

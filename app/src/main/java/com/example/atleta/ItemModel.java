@@ -1,23 +1,21 @@
 package com.example.atleta;
 
 public class ItemModel {
-    private int image;
-    private String name, age, location;
+    private String name, age, location,imgURL;
 
     public ItemModel() {
     }
 
-    public ItemModel(int image, String name, String age, String location) {
-        this.image = image;
+    public ItemModel(String imgURL, String name, String age, String location) {
+        this.imgURL = imgURL;
         this.name = name;
         this.age = age;
         this.location = location;
     }
 
-    public int getImage() {
-        return image;
+    public String getImgURL() {
+        return imgURL;
     }
-
     public String getName() {
         return name;
     }
