@@ -1,6 +1,8 @@
 package com.example.atleta;
 
-public class ItemModel {
+import java.io.Serializable;
+
+public class ItemModel implements Serializable {
     private String name, age, location,imgURL,uID;
 
     public ItemModel() {

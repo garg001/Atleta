@@ -2,7 +2,9 @@ package com.example.atleta;
 
 import com.google.firebase.database.Exclude;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String userName,userEmail,age,favorite,experience,frequency,location,DpURL;
     @Exclude
     private String uID;
