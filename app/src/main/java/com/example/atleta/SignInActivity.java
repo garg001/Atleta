@@ -26,8 +26,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -158,12 +162,26 @@ public class SignInActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //Write user to database
-                            try{
-                                writeNewUser(user.getUid(), user.getDisplayName(), user.getEmail());
-                            }catch (Exception ex){
-                                Log.d("writedatafailed",ex.toString());
-                            }
+
+                            mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(!snapshot.exists()){
+                                        //Write user to database
+                                        try{
+                                            writeNewUser(user.getUid(), user.getDisplayName(), user.getEmail());
+                                        }catch (Exception ex){
+                                            Log.d("writedatafailed",ex.toString());
+                                        }
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Toast.makeText(SignInActivity.this , "Error "+error, Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG,"userID error: "+error);
+                                }
+                            });
+
                             //SwipeActivity(user);
                             Intent intent =new Intent(SignInActivity.this,SwipeActivity.class);
                             intent.putExtra("user",user);
