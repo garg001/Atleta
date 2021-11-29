@@ -1,12 +1,17 @@
 package com.example.atleta;
 
+import com.google.firebase.database.Exclude;
+
 public class User {
     private String userName,userEmail,age,favorite,experience,frequency,location,DpURL;
+    @Exclude
+    private String uID;
 
     public User() {
     }
 
-    public User(String userName, String userEmail) {
+    public User(String uID,String userName, String userEmail) {
+        this.uID=uID;
         this.userName = userName;
         this.userEmail = userEmail;
         age="";
@@ -15,6 +20,15 @@ public class User {
         frequency="";
         location="";
         DpURL="";
+
+    }
+
+    public String getuID() {
+        return uID;
+    }
+
+    public void setuID(String uID) {
+        this.uID = uID;
     }
 
     public String getDpURL() {

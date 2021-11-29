@@ -54,6 +54,7 @@ public class SwipeActivity extends AppCompatActivity {
         simpleProgressBar = findViewById(R.id.progressBar4);
         mDatabase=  database.getReference();
         userRef= mDatabase.child("users");
+
         CardStackView cardStackView = findViewById(R.id.card_stack_view);
         manager=new CardStackLayoutManager(this, new CardStackListener() {
             @Override
@@ -69,19 +70,16 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onCardSwiped(Direction direction) {
                 Log.d(TAG,"onCardSwiped: p="+ manager.getTopPosition() + " d="+ direction );
+                ItemModel user3=adapter.getItems().get(manager.getTopPosition()-1);
 
                 if(direction == Direction.Right){
                     Toast.makeText(SwipeActivity.this,"Direction Right", Toast.LENGTH_SHORT).show();
-                }
-                if(direction == Direction.Top){
-                    Toast.makeText(SwipeActivity.this,"Direction Top", Toast.LENGTH_SHORT).show();
+
                 }
                 if(direction == Direction.Left){
                     Toast.makeText(SwipeActivity.this,"Direction Left", Toast.LENGTH_SHORT).show();
                 }
-                if(direction == Direction.Bottom){
-                    Toast.makeText(SwipeActivity.this,"Direction Bottom", Toast.LENGTH_SHORT).show();
-                }
+
 
                 //paginating
                 if(adapter.getItemCount() < manager.getTopPosition() + 1){
@@ -149,7 +147,7 @@ public class SwipeActivity extends AppCompatActivity {
                 List<ItemModel> items =new ArrayList<>();
                 for(DataSnapshot data: snapshot.getChildren()){
                     User user2=data.getValue(User.class);
-                    ItemModel itemModel=new ItemModel(user2.getDpURL(),user2.getUserName(),user2.getAge(),user2.getLocation());
+                    ItemModel itemModel=new ItemModel(user2.getDpURL(),user2.getUserName(),user2.getAge(),user2.getLocation(),user2.getuID());
                     items.add(itemModel);
                     key=data.getKey();
                 }
