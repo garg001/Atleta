@@ -88,7 +88,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void loginUserEP() {
-        simpleProgressBar.setVisibility(View.VISIBLE);
+
         String email = emailET.getText().toString();
         String password= passET.getText().toString();
 
@@ -99,6 +99,7 @@ public class SignInActivity extends AppCompatActivity {
             passET.setError("Password cannot be empty");
             passET.requestFocus();
         }else{
+            simpleProgressBar.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override

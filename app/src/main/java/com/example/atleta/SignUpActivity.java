@@ -55,7 +55,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void createUser() {
-        simpleProgressBar.setVisibility(View.VISIBLE);
         String email = emailET.getText().toString();
         String password= passET.getText().toString();
         String userName=userNameET.getText().toString();
@@ -70,6 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
             userNameET.setError("User Name cannot be empty");
             userNameET.requestFocus();
         }else{
+            simpleProgressBar.setVisibility(View.VISIBLE);
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
