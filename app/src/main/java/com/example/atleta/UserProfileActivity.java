@@ -29,6 +29,14 @@ public class UserProfileActivity extends AppCompatActivity {
     private ImageView profileIV;
     private User user1;
     private Button backBtn;
+    private String activity;
+
+    @Override
+    public void onBackPressed() {
+        if(activity==null)
+            startActivity(new Intent(UserProfileActivity.this,SwipeActivity.class));
+        else
+            startActivity(new Intent(UserProfileActivity.this,ChatActivity.class));    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +52,10 @@ public class UserProfileActivity extends AppCompatActivity {
         freqTV=findViewById(R.id.workFreqEditTV1);
         profileIV=findViewById(R.id.profileIV1);
         backBtn=findViewById(R.id.backButton1);
+         activity=getIntent().getStringExtra("activity");
 
         backBtn.setOnClickListener(v->{
-            String activity=getIntent().getStringExtra("activity");
+
             if(activity==null)
             startActivity(new Intent(UserProfileActivity.this,SwipeActivity.class));
             else

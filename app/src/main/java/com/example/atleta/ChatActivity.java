@@ -45,6 +45,11 @@ public class ChatActivity extends AppCompatActivity {
     private long getMessageKey,getLastSeenMessage;
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ChatActivity.this,SwipeActivity.class));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_activity);

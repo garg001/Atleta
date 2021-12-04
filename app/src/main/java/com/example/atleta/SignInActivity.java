@@ -49,6 +49,11 @@ public class SignInActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SignInActivity.this,MainActivity.class));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);

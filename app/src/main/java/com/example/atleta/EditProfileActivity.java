@@ -57,6 +57,11 @@ public class EditProfileActivity extends AppCompatActivity {
     private Uri imageUri;
     private String url;
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(EditProfileActivity.this,UserProfileActivity.class));
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

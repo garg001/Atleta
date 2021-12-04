@@ -31,6 +31,11 @@ public class SignUpActivity extends AppCompatActivity {
     private ProgressBar simpleProgressBar;
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SignUpActivity.this,MainActivity.class));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);

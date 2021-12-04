@@ -53,6 +53,10 @@ public class SwipeActivity extends AppCompatActivity {
     private ImageView profileButton,chatButton;
     private ItemModel user4;
 
+    @Override
+    public void onBackPressed() {
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

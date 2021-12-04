@@ -48,6 +48,11 @@ public class IndividualChatActivity extends AppCompatActivity {
     private boolean active;
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(IndividualChatActivity.this,ChatActivity.class));
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         active = true;

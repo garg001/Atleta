@@ -31,6 +31,17 @@ public class BasicUserProfileActivity extends AppCompatActivity {
     private User user1;
     private ItemModel user2;
     private Button backBtn;
+    private String uId;
+
+    @Override
+    public void onBackPressed() {
+        if(uId!=null){
+                finish();
+        }
+        else{
+               startActivity(new Intent(BasicUserProfileActivity.this,SwipeActivity.class));
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +51,7 @@ public class BasicUserProfileActivity extends AppCompatActivity {
         Intent i = getIntent();
         user2 = (ItemModel) i.getSerializableExtra("basicUser");
 
-        String uId=getIntent().getStringExtra("basicUID");
+        uId=getIntent().getStringExtra("basicUID");
 
 
         userNameTV=findViewById(R.id.userNameTV);
