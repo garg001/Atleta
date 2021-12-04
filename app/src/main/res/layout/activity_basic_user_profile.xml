@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:backgroundTint="#ffffff"
     tools:context=".BasicUserProfileActivity">
 
     <ImageView
@@ -250,7 +252,8 @@
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/background_btn2"
         android:text="Back"
         android:textSize="12sp"

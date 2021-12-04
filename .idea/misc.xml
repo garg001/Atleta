@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/back_btn.xml" value="0.14814814814814814" />
         <entry key="app/src/main/res/drawable/background_btn.xml" value="0.15462962962962962" />
         <entry key="app/src/main/res/drawable/background_btn2.xml" value="0.15462962962962962" />
         <entry key="app/src/main/res/drawable/background_white.xml" value="0.15462962962962962" />
@@ -11,16 +12,27 @@
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_downward_24.xml" value="0.15462962962962962" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.15462962962962962" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_upward_24.xml" value="0.15462962962962962" />
+        <entry key="app/src/main/res/drawable/my_msg_back.xml" value="0.14814814814814814" />
+        <entry key="app/src/main/res/drawable/opo_msg_back.xml" value="0.14814814814814814" />
         <entry key="app/src/main/res/drawable/overlay_black.xml" value="0.15462962962962962" />
+        <entry key="app/src/main/res/drawable/round_back_light_10.xml" value="0.14814814814814814" />
+        <entry key="app/src/main/res/drawable/round_back_theme_1000.xml" value="0.14814814814814814" />
+        <entry key="app/src/main/res/drawable/search_icon.xml" value="0.14814814814814814" />
         <entry key="app/src/main/res/layout/activity_basic_user_profile.xml" value="0.2328125" />
+        <entry key="app/src/main/res/layout/activity_chat_activity.xml" value="0.23596014492753623" />
+        <entry key="app/src/main/res/layout/activity_chat_avtivity.xml" value="0.23596014492753623" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.2453125" />
+        <entry key="app/src/main/res/layout/activity_individual_chat_activity.xml" value="0.23596014492753623" />
+        <entry key="app/src/main/res/layout/activity_individual_chat_actvity.xml" value="0.23596014492753623" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.23125" />
         <entry key="app/src/main/res/layout/activity_swipe.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/activity_user_profile.xml" value="0.2453125" />
+        <entry key="app/src/main/res/layout/chat_adapter_layout.xml" value="0.23596014492753623" />
         <entry key="app/src/main/res/layout/item_card.xml" value="0.2453125" />
+        <entry key="app/src/main/res/layout/message.xml" value="0.23596014492753623" />
       </map>
     </option>
   </component>

@@ -50,7 +50,7 @@ public class SwipeActivity extends AppCompatActivity {
     private Query query;
     private ProgressBar simpleProgressBar;
     private String swipe,swipe2,swipe3;
-    private ImageView profileButton;
+    private ImageView profileButton,chatButton;
     private ItemModel user4;
 
 
@@ -60,9 +60,13 @@ public class SwipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_swipe);
 
         profileButton=findViewById(R.id.profileButton);
+        chatButton=findViewById(R.id.chatButton);
 
         profileButton.setOnClickListener(v->{
             startActivity(new Intent(SwipeActivity.this,UserProfileActivity.class));
+        });
+        chatButton.setOnClickListener(v->{
+            startActivity(new Intent(SwipeActivity.this,ChatActivity.class));
         });
 
         mAuth=FirebaseAuth.getInstance();
@@ -96,19 +100,25 @@ public class SwipeActivity extends AppCompatActivity {
                 swipe=user.getUid()+user3.getuID();
                 swipe2=user3.getuID()+user.getUid();
 
-                mDatabase.child("swipes").child(swipe2).addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(!snapshot.exists()){
+                        if(!snapshot.child("swipes").child(swipe2).exists()){
                             if(direction == Direction.Right){
                                 mDatabase.child("swipes").child(swipe).setValue("Right");
                             }
                         }
                         else{
                             if(direction == Direction.Right){
-                                if(snapshot.getValue().toString().equals("Right")){
+                                if(snapshot.child("swipes").child(swipe2).getValue().toString().equals("Right")){
                                     Toast.makeText(SwipeActivity.this,"It's a Match!",Toast.LENGTH_SHORT).show();
                                     mDatabase.child("matches").child(swipe).setValue("Match");
+                                    String chatKey="1";
+                                    if (snapshot.hasChild("chat")) {
+                                        chatKey = String.valueOf(snapshot.child("chat").getChildrenCount() + 1);
+                                    }
+                                    mDatabase.child("chat").child(chatKey).child("user_1").setValue(user.getUid());
+                                    mDatabase.child("chat").child(chatKey).child("user_2").setValue(user3.getuID());
                                 }
                                     mDatabase.child("swipes").child(swipe).setValue("Right");
                             }

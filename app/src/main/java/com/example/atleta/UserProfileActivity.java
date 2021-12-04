@@ -46,7 +46,11 @@ public class UserProfileActivity extends AppCompatActivity {
         backBtn=findViewById(R.id.backButton1);
 
         backBtn.setOnClickListener(v->{
+            String activity=getIntent().getStringExtra("activity");
+            if(activity==null)
             startActivity(new Intent(UserProfileActivity.this,SwipeActivity.class));
+            else
+                startActivity(new Intent(UserProfileActivity.this,ChatActivity.class));
         });
 
         mAuth = FirebaseAuth.getInstance();

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ChatActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/chatBackButton"
+            android:layout_width="70dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/background_btn2"
+            android:padding="6dp"
+            android:text="Back"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="Chat"
+            android:textColor="#49BEFF"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userProfileImageView"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/userb" />
+    </RelativeLayout>
+    
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/messagesRecyclerView"/>
+
+</LinearLayout>

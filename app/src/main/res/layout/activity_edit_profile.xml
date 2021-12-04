@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:backgroundTint="#ffffff"
     tools:context=".EditProfileActivity">
 
     <Button
@@ -23,12 +25,10 @@
         android:id="@+id/editDpIV"
         android:layout_width="131dp"
         android:layout_height="112dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTV"
-        app:layout_constraintVertical_bias="0.120000005"
         app:srcCompat="@drawable/editdp" />
 
     <TextView
@@ -40,7 +40,7 @@
         android:text="Edit Profile"
         android:textAllCaps="false"
         android:textColor="#49BEFF"
-        android:textSize="45sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
@@ -52,14 +52,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/background_white"
         android:elevation="10dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/editDpIV">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,7 +78,8 @@
                 android:ems="10"
                 android:hint="Name"
                 android:inputType="textPersonName"
-                android:textColor="#585858"
+                android:textColor="#222222"
+                android:textColorHint="#6E6E6E"
                 android:textSize="16sp"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -101,7 +102,8 @@
                 android:ems="10"
                 android:hint="Location"
                 android:inputType="textPersonName"
-                android:textColor="#585858"
+                android:textColor="#222222"
+                android:textColorHint="#6E6E6E"
                 android:textSize="16sp"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -124,7 +126,8 @@
                 android:ems="10"
                 android:hint="Age"
                 android:inputType="textPersonName"
-                android:textColor="#585858"
+                android:textColor="#222222"
+                android:textColorHint="#6E6E6E"
                 android:textSize="16sp"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -147,7 +150,8 @@
                 android:ems="10"
                 android:hint="Favorite"
                 android:inputType="textPersonName"
-                android:textColor="#585858"
+                android:textColor="#222222"
+                android:textColorHint="#6E6E6E"
                 android:textSize="16sp"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -170,7 +174,8 @@
                 android:ems="10"
                 android:hint="Experience"
                 android:inputType="textPersonName"
-                android:textColor="#585858"
+                android:textColor="#222222"
+                android:textColorHint="#6E6E6E"
                 android:textSize="16sp"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -193,7 +198,8 @@
                 android:ems="10"
                 android:hint="Workout Frequency"
                 android:inputType="textPersonName"
-                android:textColor="#585858"
+                android:textColor="#222222"
+                android:textColorHint="#6E6E6E"
                 android:textSize="16sp"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -233,7 +239,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/background_btn2"
         android:text="Remove DP"

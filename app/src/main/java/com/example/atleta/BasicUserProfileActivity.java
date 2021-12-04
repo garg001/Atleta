@@ -40,6 +40,9 @@ public class BasicUserProfileActivity extends AppCompatActivity {
         Intent i = getIntent();
         user2 = (ItemModel) i.getSerializableExtra("basicUser");
 
+        String uId=getIntent().getStringExtra("basicUID");
+
+
         userNameTV=findViewById(R.id.userNameTV);
         emailTV=findViewById(R.id.emailTV);
         locationTV=findViewById(R.id.locationEditTV);
@@ -49,13 +52,25 @@ public class BasicUserProfileActivity extends AppCompatActivity {
         freqTV=findViewById(R.id.workFreqEditTV);
         profileIV=findViewById(R.id.profileIV);
         backBtn=findViewById(R.id.backButton);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        backBtn.setOnClickListener(v->{
-            startActivity(new Intent(BasicUserProfileActivity.this,SwipeActivity.class));
-        });
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+
+        if(uId!=null){
+            backBtn.setOnClickListener(v->{
+                finish();
+            });
+            userRef = mDatabase.child("users").child(uId);
+
+        }
+        else{
+            backBtn.setOnClickListener(v->{
+                startActivity(new Intent(BasicUserProfileActivity.this,SwipeActivity.class));
+            });
+            userRef = mDatabase.child("users").child(user2.getuID());
+        }
 
         retrieveData();
 
@@ -63,8 +78,7 @@ public class BasicUserProfileActivity extends AppCompatActivity {
     }
 
     private void retrieveData() {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        userRef = mDatabase.child("users").child(user2.getuID());
+
 
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
