@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.Image;
 import android.nfc.Tag;
@@ -80,21 +81,22 @@ public class ChatActivity extends AppCompatActivity {
 
 
         adapter=new MessagesAdapter(ChatActivity.this);
+        addList();
         messagesRecyclerView.setAdapter(adapter);
 
-        addList();
+
 
     }
 
     private void addList() {
-        userRef.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messagesLists.clear();
                 unseenMessages=0;
                 lastMessage="";
                 chatKey="";
-                for(DataSnapshot data : snapshot.getChildren()){
+                for(DataSnapshot data : snapshot.child("users").getChildren()){
                     User user2=data.getValue(User.class);
 
                     if(!(user2.getuID().equals(user.getUid()))){
@@ -147,14 +149,14 @@ public class ChatActivity extends AppCompatActivity {
                                                 }
                                                 MessagesList messagesList=new MessagesList(user2.getUserName(),user2.getDpURL(),lastMessage,chatKey,unseenMessages,user2.getuID());
                                                 messagesLists.add(messagesList);
-                                                adapter.setMessagesLists(messagesLists);
-                                                adapter.notifyDataSetChanged();
+                                                adapter.updateMessagesList(messagesLists);
                                             }
+
                                         }
+
 
                                     }
                                 }
-
 
                                 }
 
@@ -166,9 +168,9 @@ public class ChatActivity extends AppCompatActivity {
                                 Log.d(TAG,"addList error: "+error);
                             }
                         });
+
                     }
                 }
-
 
             }
 
@@ -178,6 +180,7 @@ public class ChatActivity extends AppCompatActivity {
                 Log.d(TAG,"ChatActivity error: "+error);
             }
         });
+
 
     }
 

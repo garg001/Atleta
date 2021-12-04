@@ -102,4 +102,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
     public void setMessagesLists(List<MessagesList> messagesLists) {
         this.messagesLists = messagesLists;
     }
+    public void updateMessagesList(List<MessagesList> messagesLists){
+        this.messagesLists=messagesLists;
+        notifyDataSetChanged();
+    }
 }
