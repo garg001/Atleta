@@ -40,7 +40,6 @@ public class SwipeActivity extends AppCompatActivity {
     private static final String TAG ="SwipeActivity" ;
     private CardStackLayoutManager manager;
     private CardStackAdapter adapter;
-    private Bundle extras;
     private FirebaseUser user;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase,userRef;

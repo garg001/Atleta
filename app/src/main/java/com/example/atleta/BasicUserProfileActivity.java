@@ -30,7 +30,7 @@ public class BasicUserProfileActivity extends AppCompatActivity {
     private ImageView profileIV;
     private User user1;
     private ItemModel user2;
-    private Button backBtn;
+    private Button backBtn,reportBtn;
     private String uId;
 
     @Override
@@ -64,6 +64,7 @@ public class BasicUserProfileActivity extends AppCompatActivity {
         profileIV=findViewById(R.id.profileIV);
         backBtn=findViewById(R.id.backButton);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        reportBtn=findViewById(R.id.reportButton);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -82,6 +83,14 @@ public class BasicUserProfileActivity extends AppCompatActivity {
             });
             userRef = mDatabase.child("users").child(user2.getuID());
         }
+        reportBtn.setOnClickListener(v->{
+            Intent intent =new Intent(BasicUserProfileActivity.this,ReportActivity.class);
+            if(uId!=null)
+            intent.putExtra("uID",uId);
+            else
+                intent.putExtra("uID",user2.getuID());
+            startActivity(intent);
+        });
 
         retrieveData();
 
