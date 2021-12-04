@@ -166,7 +166,7 @@ public class IndividualChatActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(v -> {
             final String getTxtMessage = messageEditText.getText().toString();
             if (!getTxtMessage.isEmpty()) {
-                final String currentTimestamp = String.valueOf(System.currentTimeMillis()).substring(0, 10);
+                final String currentTimestamp = String.valueOf(System.currentTimeMillis());
                 mDatabase.child("chat").child(chatKey).child("messages").child(currentTimestamp).child("msg").setValue(getTxtMessage);
                 mDatabase.child("chat").child(chatKey).child("messages").child(currentTimestamp).child("uID").setValue(user.getUid());
 
